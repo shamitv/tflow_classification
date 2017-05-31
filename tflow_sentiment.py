@@ -135,7 +135,7 @@ pred = multilayer_perceptron(x, weights, biases)
 # Define loss and optimizer
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
-
+saver = tf.train.Saver()
 # Initializing the variables
 init = tf.global_variables_initializer()
 start_time = time.time()
@@ -153,7 +153,10 @@ with tf.Session() as sess:
     # Calculate accuracy
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
     print("Accuracy:", accuracy.eval({x: tagged_data['test_inputs'],y: tagged_data['test_outputs']}))
+    tstamp=time.time();
+    model_path="K:/nlp/sentiment/data/yelp/tflow_model_"+str(tstamp)+"_.ckpt";
+    save_path = saver.save(sess, model_path)
+    print("Model saved in file: %s" % save_path)
 
 elapsed_time = time.time() - start_time
 print("Elapsed time (seconds) :: ",elapsed_time)
-
