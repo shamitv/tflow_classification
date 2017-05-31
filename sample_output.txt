@@ -1,0 +1,67 @@
+Loading data from Pickle : K:/nlp/sentiment/data/yelp/train_test.p
+Training examples=  804
+Training attributes=  300
+2017-05-31 09:04:13.995171: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.995445: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.995675: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.995909: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.996156: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.996403: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.996642: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:13.996871: W c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\platform\cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-05-31 09:04:14.268586: I c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\common_runtime\gpu\gpu_device.cc:887] Found device 0 with properties: 
+name: GeForce GTX 950
+major: 5 minor: 2 memoryClockRate (GHz) 1.253
+pciBusID 0000:01:00.0
+Total memory: 2.00GiB
+Free memory: 1.65GiB
+2017-05-31 09:04:14.268859: I c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\common_runtime\gpu\gpu_device.cc:908] DMA: 0 
+2017-05-31 09:04:14.268983: I c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\common_runtime\gpu\gpu_device.cc:918] 0:   Y 
+2017-05-31 09:04:14.269117: I c:\tf_jenkins\home\workspace\release-win\device\gpu\os\windows\tensorflow\core\common_runtime\gpu\gpu_device.cc:977] Creating TensorFlow device (/gpu:0) -> (device: 0, name: GeForce GTX 950, pci bus id: 0000:01:00.0)
+Epoch: 0001 cost= 31476.3261718750000000000000000
+Epoch: 0500 cost= 0.0000000217955378190026750
+Epoch: 1000 cost= 0.0000000087479143928703706
+Epoch: 1500 cost= 0.0000000053377178232949518
+Epoch: 2000 cost= 0.0000000037067506841736986
+Epoch: 2500 cost= 0.0000000026688617982273399
+Epoch: 3000 cost= 0.0000000019275117058015212
+Epoch: 3500 cost= 0.0000000013344315652474847
+Epoch: 4000 cost= 0.0000000010378913284370128
+Epoch: 4500 cost= 0.0000000007413510916265409
+Epoch: 5000 cost= 0.0000000005930808621990025
+Epoch: 5500 cost= 0.0000000004448106882826153
+Epoch: 6000 cost= 0.0000000004448106882826153
+Epoch: 6500 cost= 0.0000000002965404866106525
+Epoch: 7000 cost= 0.0000000001482702433053262
+Epoch: 7500 cost= 0.0000000001482702433053262
+Epoch: 8000 cost= 0.0000000001482702433053262
+Epoch: 8500 cost= 0.0000000001482702433053262
+Epoch: 9000 cost= 0.0000000000000000000000000
+Epoch: 9500 cost= 0.0000000000000000000000000
+Epoch: 10000 cost= 0.0000000000000000000000000
+Epoch: 10500 cost= 0.0000000000000000000000000
+Epoch: 11000 cost= 0.0000000000000000000000000
+Epoch: 11500 cost= 0.0000000000000000000000000
+Epoch: 12000 cost= 0.0000000000000000000000000
+Epoch: 12500 cost= 0.0000000000000000000000000
+Epoch: 13000 cost= 0.0000000000000000000000000
+Epoch: 13500 cost= 0.0000000000000000000000000
+Epoch: 14000 cost= 0.0000000000000000000000000
+Epoch: 14500 cost= 0.0000000000000000000000000
+Epoch: 15000 cost= 0.0000000000000000000000000
+Epoch: 15500 cost= 0.0000000000000000000000000
+Epoch: 16000 cost= 0.0000000000000000000000000
+Epoch: 16500 cost= 0.0000000000000000000000000
+Epoch: 17000 cost= 0.0000000000000000000000000
+Epoch: 17500 cost= 0.0000000000000000000000000
+Epoch: 18000 cost= 0.0000000000000000000000000
+Epoch: 18500 cost= 0.0000000000000000000000000
+Epoch: 19000 cost= 0.0000000000000000000000000
+Epoch: 19500 cost= 0.0000000000000000000000000
+Epoch: 20000 cost= 0.0000000000000000000000000
+Optimization Finished! Total iteration =  20000
+Accuracy: 0.798614
+Model saved in file: K:/nlp/sentiment/data/yelp/tflow_model_1496201866.513063_.ckpt
+Elapsed time (seconds) ::  212.91319060325623
+
+Process finished with exit code 0
