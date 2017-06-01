@@ -38,7 +38,7 @@ def split_training_test(data,training_percent):
     training_idx, test_idx = indices[:num_training_post_split], indices[num_training_post_split:]
     training_inputs, test_inputs = x[training_idx, :], x[test_idx, :]
     training_outputs, test_outputs = y[training_idx, :], y[test_idx, :]
-    training_sentences, test_sentences= s[training_idx, :], s[test_idx, :]
+    training_sentences, test_sentences= s[training_idx,], s[test_idx,]
     data['inputs']=training_inputs;
     data['outputs']=training_outputs;
     data['sentences'] = training_sentences;
@@ -108,4 +108,19 @@ print("Training attributes= ",num_cols)
 n_classes = 3 #
 model=build_network(num_cols,n_classes);
 model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=5, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
-show_metric=True, run_id="dense_model")
+show_metric=True, run_id="dense_model");
+
+labels=['Negative','Neutral','Positive'];
+correct=0;
+for i in range(0, 20):
+    sent=tagged_data['test_sentences'][i].rstrip();
+    vect=tagged_data['test_inputs'][i];
+    expected_result = tagged_data['test_outputs'][i];
+    prediction = model.predict([vect]);
+    result=np.argmax(prediction);
+    if(result==np.argmax(expected_result)):
+        correct=correct+1;
+    label=labels[result];
+    print(sent,label,prediction,expected_result);
+
+print("Correct predictions == ",correct)
