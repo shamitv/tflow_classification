@@ -101,7 +101,8 @@ def build_network (num_input_attributes,num_classes):
 def test_model(model, tagged_data):
     labels = ['Negative', 'Neutral', 'Positive'];
     correct = 0;
-    for i in range(0, 20):
+    test_count=len(tagged_data['test_sentences'])
+    for i in range(0, test_count):
         sent = tagged_data['test_sentences'][i].rstrip();
         vect = tagged_data['test_inputs'][i];
         expected_result = tagged_data['test_outputs'][i];
@@ -111,15 +112,15 @@ def test_model(model, tagged_data):
             correct = correct + 1;
         label = labels[result];
         print(sent, label, prediction, expected_result);
-
-    print("Correct predictions == ", correct)
+    print("Correct predictions == ", correct, " out of :: ",test_count)
+    print("% correct :: ", (correct/test_count)*100)
     return;
 
 def train_or_load_model(tagged_data):
     model = build_network(num_cols, n_classes);
     model_file = "K:/nlp/sentiment/data/yelp/sentiment.tfl";
     #Check if model exists
-    if(os.path.isfile(model_file)):
+    if(os.path.isfile(model_file+".meta")):
         print("Loading model from :: ",model_file)
         model.load(model_file);
     else:
