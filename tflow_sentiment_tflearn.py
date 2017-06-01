@@ -69,6 +69,23 @@ def load_data():
     return data;
 
 
+def build_network (num_input_attributes,num_classes):
+    num_cols=num_input_attributes;
+    # Building deep neural network
+    input_layer = tflearn.input_data(shape=[None, num_cols]);
+    dense1 = tflearn.fully_connected(input_layer, num_cols, activation='tanh',regularizer='L2', weight_decay=0.001);
+    dropout1 = tflearn.dropout(dense1, 0.8);
+    dense2 = tflearn.fully_connected(dropout1, num_cols, activation='tanh',regularizer='L2', weight_decay=0.001);
+    dropout2 = tflearn.dropout(dense2, 0.8);
+    softmax = tflearn.fully_connected(dropout2, n_classes, activation='softmax');
+    # Regression using SGD with learning rate decay and Top-3 accuracy
+    sgd = tflearn.SGD(learning_rate=0.1, lr_decay=0.96, decay_step=1000);
+    top_k = tflearn.metrics.Top_k(3);
+    net = tflearn.regression(softmax, optimizer=sgd, metric=top_k,loss='categorical_crossentropy');
+    # Training
+    model = tflearn.DNN(net, tensorboard_verbose=0)
+    return model;
+
 tagged_data = load_data();
 
 num_rows = tagged_data['inputs'].shape[0];
@@ -76,22 +93,6 @@ num_cols=tagged_data['inputs'].shape[1];
 print("Training examples= ",num_rows)
 print("Training attributes= ",num_cols)
 n_classes = 3 #
-
-# Building deep neural network
-input_layer = tflearn.input_data(shape=[None, num_cols])
-dense1 = tflearn.fully_connected(input_layer, num_cols, activation='tanh',
-regularizer='L2', weight_decay=0.001)
-dropout1 = tflearn.dropout(dense1, 0.8)
-dense2 = tflearn.fully_connected(dropout1, num_cols, activation='tanh',
-regularizer='L2', weight_decay=0.001)
-dropout2 = tflearn.dropout(dense2, 0.8)
-softmax = tflearn.fully_connected(dropout2, n_classes, activation='softmax')
-# Regression using SGD with learning rate decay and Top-3 accuracy
-sgd = tflearn.SGD(learning_rate=0.1, lr_decay=0.96, decay_step=1000)
-top_k = tflearn.metrics.Top_k(3)
-net = tflearn.regression(softmax, optimizer=sgd, metric=top_k,
-loss='categorical_crossentropy')
-# Training
-model = tflearn.DNN(net, tensorboard_verbose=0)
-model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=200, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
+model=build_network(num_cols,n_classes);
+model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=5, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
 show_metric=True, run_id="dense_model")
