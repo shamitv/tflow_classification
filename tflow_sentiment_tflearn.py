@@ -99,6 +99,23 @@ def build_network (num_input_attributes,num_classes):
     model = tflearn.DNN(net, tensorboard_verbose=0)
     return model;
 
+def test_model(model, tagged_data):
+    labels = ['Negative', 'Neutral', 'Positive'];
+    correct = 0;
+    for i in range(0, 20):
+        sent = tagged_data['test_sentences'][i].rstrip();
+        vect = tagged_data['test_inputs'][i];
+        expected_result = tagged_data['test_outputs'][i];
+        prediction = model.predict([vect]);
+        result = np.argmax(prediction);
+        if (result == np.argmax(expected_result)):
+            correct = correct + 1;
+        label = labels[result];
+        print(sent, label, prediction, expected_result);
+
+    print("Correct predictions == ", correct)
+    return;
+
 tagged_data = load_data();
 
 num_rows = tagged_data['inputs'].shape[0];
@@ -107,20 +124,6 @@ print("Training examples= ",num_rows)
 print("Training attributes= ",num_cols)
 n_classes = 3 #
 model=build_network(num_cols,n_classes);
-model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=5, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
+model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=100, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
 show_metric=True, run_id="dense_model");
-
-labels=['Negative','Neutral','Positive'];
-correct=0;
-for i in range(0, 20):
-    sent=tagged_data['test_sentences'][i].rstrip();
-    vect=tagged_data['test_inputs'][i];
-    expected_result = tagged_data['test_outputs'][i];
-    prediction = model.predict([vect]);
-    result=np.argmax(prediction);
-    if(result==np.argmax(expected_result)):
-        correct=correct+1;
-    label=labels[result];
-    print(sent,label,prediction,expected_result);
-
-print("Correct predictions == ",correct)
+test_model(model,tagged_data);
