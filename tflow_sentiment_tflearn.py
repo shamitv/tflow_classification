@@ -38,11 +38,13 @@ def split_training_test(data,training_percent):
     training_idx, test_idx = indices[:num_training_post_split], indices[num_training_post_split:]
     training_inputs, test_inputs = x[training_idx, :], x[test_idx, :]
     training_outputs, test_outputs = y[training_idx, :], y[test_idx, :]
+    training_sentences, test_sentences= s[training_idx, :], s[test_idx, :]
     data['inputs']=training_inputs;
     data['outputs']=training_outputs;
+    data['sentences'] = training_sentences;
     data['test_inputs']=test_inputs;
     data['test_outputs']=test_outputs;
-
+    data['test_sentences'] = test_sentences;
     return data;
 
 def load_data_from_csv():
