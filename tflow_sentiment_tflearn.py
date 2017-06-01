@@ -6,15 +6,19 @@ import tensorflow as tf
 import pickle
 import time
 import tflearn
+import codecs
 
-def load_file(path, output_value):
+def load_file(path, sentence_path, output_value):
     data={};
     print("Reading CSV : " + path);
     inputs = genfromtxt(path, delimiter=' ');
     num_rows = inputs.shape[0];
     outputs = np.full(num_rows, output_value);
+    file = codecs.open(sentence_path, 'r',encoding='utf-8');
+    lines=file.readlines();
     data['inputs']=inputs;
     data['outputs'] = outputs;
+    data['sentences'] = np.array(lines, dtype=object);
     return data;
 
 def transform_to_one_hot(values):
@@ -27,6 +31,7 @@ def transform_to_one_hot(values):
 def split_training_test(data,training_percent):
     x=data['inputs'];
     y=data['outputs'];
+    s=data['sentences'];
     num_examples=x.shape[0];
     num_training_post_split=int((training_percent/100)*num_examples)
     indices = np.random.permutation(num_examples)
@@ -37,6 +42,7 @@ def split_training_test(data,training_percent):
     data['outputs']=training_outputs;
     data['test_inputs']=test_inputs;
     data['test_outputs']=test_outputs;
+
     return data;
 
 def load_data_from_csv():
@@ -44,11 +50,16 @@ def load_data_from_csv():
     negative_file = "K:/nlp/sentiment/data/yelp/split/negative_vectors.csv";
     positive_file = "K:/nlp/sentiment/data/yelp/split/positive_vectors.csv";
     neutral_file = "K:/nlp/sentiment/data/yelp/split/neutral_vectors.csv";
-    negative_data = load_file(negative_file,0);
-    positive_data = load_file(positive_file,2);
-    neutral_data = load_file(neutral_file,1);
+    negative_sentence_file = "K:/nlp/sentiment/data/yelp/split/negative.txt";
+    positive_sentence_file = "K:/nlp/sentiment/data/yelp/split/positive.txt";
+    neutral_sentence_file = "K:/nlp/sentiment/data/yelp/split/neutral.txt";
+    negative_data = load_file(negative_file,negative_sentence_file,0);
+    positive_data = load_file(positive_file,positive_sentence_file ,2);
+    neutral_data = load_file(neutral_file,neutral_sentence_file,1);
     data['inputs'] = np.append(negative_data['inputs'],positive_data['inputs'],axis=0);
     #data['inputs'] = np.append(data['inputs'],neutral_data['inputs'],axis=0);
+    data['sentences'] = np.append(negative_data['sentences'],positive_data['sentences'],axis=0);
+    # data['sentences'] = np.append(data['sentences'],neutral_data['sentences'],axis=0);
     data['outputs'] = np.append(negative_data['outputs'], positive_data['outputs']);
     #data['outputs'] = np.append(data['outputs'], neutral_data['outputs']);
     data['outputs'] = transform_to_one_hot(data['outputs']);
