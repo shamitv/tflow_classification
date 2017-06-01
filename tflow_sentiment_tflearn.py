@@ -7,6 +7,7 @@ import pickle
 import time
 import tflearn
 import codecs
+import os
 
 def load_file(path, sentence_path, output_value):
     data={};
@@ -87,10 +88,8 @@ def build_network (num_input_attributes,num_classes):
     # Building deep neural network
     input_layer = tflearn.input_data(shape=[None, num_cols]);
     dense1 = tflearn.fully_connected(input_layer, num_cols, activation='tanh',regularizer='L2', weight_decay=0.001);
-    dropout1 = tflearn.dropout(dense1, 0.8);
-    dense2 = tflearn.fully_connected(dropout1, num_cols, activation='tanh',regularizer='L2', weight_decay=0.001);
-    dropout2 = tflearn.dropout(dense2, 0.8);
-    softmax = tflearn.fully_connected(dropout2, n_classes, activation='softmax');
+    dense2 = tflearn.fully_connected(dense1, num_cols, activation='tanh',regularizer='L2', weight_decay=0.001);
+    softmax = tflearn.fully_connected(dense2, n_classes, activation='softmax');
     # Regression using SGD with learning rate decay and Top-3 accuracy
     sgd = tflearn.SGD(learning_rate=0.1, lr_decay=0.96, decay_step=1000);
     top_k = tflearn.metrics.Top_k(3);
@@ -116,6 +115,21 @@ def test_model(model, tagged_data):
     print("Correct predictions == ", correct)
     return;
 
+def train_or_load_model(tagged_data):
+    model = build_network(num_cols, n_classes);
+    model_file = "K:/nlp/sentiment/data/yelp/sentiment.tfl";
+    #Check if model exists
+    if(os.path.isfile(model_file)):
+        print("Loading model from :: ",model_file)
+        model.load(model_file);
+    else:
+        model.fit(tagged_data['inputs'], tagged_data['outputs'], n_epoch=400,
+                  validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
+                  show_metric=True, run_id="dense_model");
+        model.save(model_file);
+
+    return model;
+
 tagged_data = load_data();
 
 num_rows = tagged_data['inputs'].shape[0];
@@ -123,7 +137,7 @@ num_cols=tagged_data['inputs'].shape[1];
 print("Training examples= ",num_rows)
 print("Training attributes= ",num_cols)
 n_classes = 3 #
-model=build_network(num_cols,n_classes);
-model.fit( tagged_data['inputs'],  tagged_data['outputs'], n_epoch=100, validation_set=(tagged_data['test_inputs'], tagged_data['test_outputs']),
-show_metric=True, run_id="dense_model");
+
+model=train_or_load_model(tagged_data);
+
 test_model(model,tagged_data);
