@@ -1,0 +1,4 @@
+
+./fasttext print-sentence-vectors /nlp/sec/edgar/sec_edgar~/sec_edgar~ < /nlp/sentiment/data/yelp/split/negative.txt  > /nlp/sentiment/data/yelp/split/negative_vectors.txt
+./fasttext print-sentence-vectors /nlp/sec/edgar/sec_edgar~/sec_edgar~ < /nlp/sentiment/data/yelp/split/positive.txt  > /nlp/sentiment/data/yelp/split/positive_vectors.txt
+./fasttext print-sentence-vectors /nlp/sec/edgar/sec_edgar~/sec_edgar~ < /nlp/sentiment/data/yelp/split/neutral.txt  > /nlp/sentiment/data/yelp/split/neutral_vectors.txt
